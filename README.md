@@ -6,7 +6,7 @@
 
 ## One-Sentence Pitch
 
-Branch Self is an AI experience that lets you build a profile of who you are today, generate three distinct future personas from different life paths, and ask them the same question—so you get multi-perspective, emotionally grounded advice instead of generic chatbot answers.
+Future ME is an AI experience that lets you build a profile of who you are today, generate three distinct future personas from different life paths, and ask them the same question—so you get multi-perspective, emotionally grounded advice instead of generic chatbot answers.
 
 ---
 
