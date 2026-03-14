@@ -13,6 +13,23 @@ const USE_SUPABASE = !!(
 
 const USE_MOCK = !process.env.GEMINI_API_KEY;
 
+function isLikelyInvalidInput(text: string): boolean {
+  const value = text.trim();
+  if (value.length < 2) return true;
+
+  const nonWhitespace = (value.match(/[^\s]/g) ?? []).length;
+  const alphaNum = (value.match(/[\p{L}\p{N}]/gu) ?? []).length;
+  if (nonWhitespace > 0 && alphaNum / nonWhitespace < 0.35) return true;
+
+  // Obvious repeated gibberish like "aaaaaaa", "哈哈哈哈哈哈哈哈" or "!!!!!"
+  if (/(.)\1{7,}/u.test(value)) return true;
+
+  // Very long single token often indicates accidental paste / nonsense.
+  if (!/\s/.test(value) && value.length > 80) return true;
+
+  return false;
+}
+
 function getMockReply(question: string): string {
   return `Hey, I hear you. That's something I remember wrestling with too. Looking back from where I am now, I'd say: don't overthink it. The fact that you're asking "${question.slice(0, 60)}${question.length > 60 ? "..." : ""}" tells me you already sense the direction you need to go.\n\nWhat I can tell you is — the worrying? It doesn't go away entirely, but it changes shape. The things I was afraid of back then, most of them either never happened or turned out to be manageable. What mattered more was showing up, even imperfectly.\n\nTrust yourself a little more than you think you should. You've got this.`;
 }
@@ -36,6 +53,18 @@ export async function POST(request: Request) {
     }
 
     const { messages, yearsAhead } = parsed.data;
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+    const userInput = lastUserMsg?.content?.trim() ?? "";
+
+    if (!userInput || isLikelyInvalidInput(userInput)) {
+      return NextResponse.json(
+        {
+          error:
+            "I couldn't understand that input. Please send a clear question or concern in normal language.",
+        },
+        { status: 400 }
+      );
+    }
 
     // Get user profile
     let profile: CurrentSelfProfile | null = null;
@@ -62,8 +91,7 @@ export async function POST(request: Request) {
 
     // Mock mode — no Gemini key
     if (USE_MOCK) {
-      const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
-      const reply = getMockReply(lastUserMsg?.content ?? "your question");
+      const reply = getMockReply(userInput || "your question");
       return NextResponse.json({ message: reply });
     }
 

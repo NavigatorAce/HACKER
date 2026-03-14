@@ -55,11 +55,15 @@ export default function AskPage() {
       ]);
     } catch (err) {
       console.error(err);
+      const errorText =
+        err instanceof Error && err.message
+          ? err.message
+          : "Sorry, I couldn't respond right now. Please try again.";
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Sorry, I couldn't respond right now. Please try again.",
+          content: errorText,
         },
       ]);
     } finally {

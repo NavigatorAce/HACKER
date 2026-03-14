@@ -60,7 +60,7 @@ export type AskPostInput = z.infer<typeof askPostSchema>;
 /** POST /api/chat — request body */
 const chatMessageSchema = z.object({
   role: z.enum(["user", "assistant"]),
-  content: z.string().max(SINGLE_MESSAGE_MAX_LENGTH),
+  content: z.string().trim().min(1, "Message cannot be empty").max(SINGLE_MESSAGE_MAX_LENGTH),
 });
 
 export const chatPostSchema = z.object({

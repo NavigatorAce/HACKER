@@ -9,6 +9,32 @@ const USE_SUPABASE = !!(
   process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+function isLowSignalText(value: string): boolean {
+  const text = value.trim();
+  if (!text) return true;
+
+  // Single-character answers like "1", "." are treated as non-answers.
+  if (text.length === 1) return true;
+
+  // Short pure-number answers are usually placeholders.
+  if (/^\d{1,6}$/.test(text)) return true;
+
+  // Repeated characters like "aaaaaa", "111111", "......"
+  if (/(.)\1{5,}/u.test(text)) return true;
+
+  // Mostly symbols with little language content.
+  const nonWhitespace = (text.match(/[^\s]/g) ?? []).length;
+  const alphaNum = (text.match(/[\p{L}\p{N}]/gu) ?? []).length;
+  if (nonWhitespace > 0 && alphaNum / nonWhitespace < 0.35) return true;
+
+  return false;
+}
+
+function normalizeLongAnswer(value: string): string {
+  const text = value.trim();
+  return isLowSignalText(text) ? "" : text;
+}
+
 export async function GET() {
   try {
     if (USE_SUPABASE) {
@@ -62,6 +88,12 @@ export async function POST(request: Request) {
       additionalContext,
     } = parsed.data;
 
+    // Ignore low-signal placeholder content like "1", random symbols, etc.
+    const normalizedGoals = normalizeLongAnswer(goals);
+    const normalizedFears = normalizeLongAnswer(fears);
+    const normalizedStruggles = normalizeLongAnswer(currentStruggles);
+    const normalizedAdditional = normalizeLongAnswer(additionalContext ?? "");
+
     const profile: CurrentSelfProfile = {
       userId: "", // set below
       profileName: profileName || undefined,
@@ -73,10 +105,10 @@ export async function POST(request: Request) {
       age,
       lifeStage,
       personalityTraits,
-      goals,
-      fears,
-      currentStruggles,
-      additionalContext,
+      goals: normalizedGoals,
+      fears: normalizedFears,
+      currentStruggles: normalizedStruggles,
+      additionalContext: normalizedAdditional || undefined,
     };
 
     if (USE_SUPABASE) {
