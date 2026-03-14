@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     }
 
     const {
-      profileName,
+      gender,
       name,
       status,
       university,
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
 
     const profile: CurrentSelfProfile = {
       userId: "", // set below
-      profileName: profileName || undefined,
+      gender: gender ?? undefined,
       name: name || undefined,
       status: status ?? undefined,
       university: university || undefined,

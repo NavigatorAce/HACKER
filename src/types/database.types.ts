@@ -11,7 +11,7 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          profile_name: string;
+          gender: string;
           name: string;
           status: string | null;
           university: string;

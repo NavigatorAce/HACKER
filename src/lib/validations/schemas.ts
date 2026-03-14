@@ -26,7 +26,7 @@ const YEARS_AHEAD_MAX = 60;
 
 /** POST /api/profile — request body */
 export const profilePostSchema = z.object({
-  profileName: z.string().max(200).optional().default(""),
+  gender: z.enum(["male", "female", "other"]).optional(),
   name: z.string().max(200).optional().default(""),
   status: z.enum(["studying", "working"]).optional(),
   university: z.string().max(300).optional().default(""),

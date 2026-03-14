@@ -40,7 +40,9 @@ export function getFutureMeSystemPrompt(
 
   const identityLines: string[] = [];
   if (profile.name?.trim()) identityLines.push(`- You can call me ${profile.name}.`);
-  if (profile.profileName?.trim()) identityLines.push(`- This profile is named: "${profile.profileName}".`);
+  if (profile.gender) {
+    identityLines.push(`- Gender: ${profile.gender}.`);
+  }
   identityLines.push(`- I'm ${profile.age} years old, ${profile.lifeStage.replace(/_/g, " ")} phase`);
   if (profile.status === "studying") {
     const major = profile.major?.trim();

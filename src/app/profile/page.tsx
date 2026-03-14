@@ -23,6 +23,12 @@ const STATUS_OPTIONS: { value: StudyOrWorkStatus; label: string }[] = [
   { value: "working", label: "Working" },
 ];
 
+const GENDER_OPTIONS = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other", label: "Other" },
+] as const;
+
 const TRAIT_OPTIONS = [
   "Curious", "Cautious", "Ambitious", "Reflective", "Creative", "Practical",
   "Empathetic", "Independent", "Driven", "Calm", "Anxious", "Optimistic",
@@ -30,7 +36,7 @@ const TRAIT_OPTIONS = [
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [profileName, setProfileName] = useState("");
+  const [gender, setGender] = useState<"male" | "female" | "other" | "">("");
   const [name, setName] = useState("");
   const [status, setStatus] = useState<StudyOrWorkStatus | "">("");
   const [university, setUniversity] = useState("");
@@ -59,7 +65,10 @@ export default function ProfilePage() {
           setInitialLoad(false);
           return;
         }
-        setProfileName(p.profileName ?? "");
+        const g = p.gender ?? "";
+        setGender(
+          g === "male" || g === "female" || g === "other" ? g : ""
+        );
         setName(p.name ?? "");
         setStatus((p.status as StudyOrWorkStatus) ?? "");
         setUniversity(p.university ?? "");
@@ -96,7 +105,7 @@ export default function ProfilePage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          profileName: profileName || undefined,
+          gender: gender || undefined,
           name: name || undefined,
           status: status || undefined,
           university: university || undefined,
@@ -149,15 +158,23 @@ export default function ProfilePage() {
             <CardContent className="space-y-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="profileName">Profile name</Label>
-                  <Input
-                    id="profileName"
-                    type="text"
-                    placeholder="e.g. My 2030 self"
-                    value={profileName}
-                    onChange={(e) => setProfileName(e.target.value)}
-                    className="bg-muted/50 border-border"
-                  />
+                  <Label>Select your gender</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {GENDER_OPTIONS.map((g) => (
+                      <button
+                        key={g.value}
+                        type="button"
+                        onClick={() => setGender(g.value)}
+                        className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
+                          gender === g.value
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80"
+                        }`}
+                      >
+                        {g.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>

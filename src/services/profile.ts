@@ -6,7 +6,7 @@ const TABLE = "current_self_profiles";
 function toRow(p: CurrentSelfProfile) {
   return {
     user_id: p.userId,
-    profile_name: p.profileName ?? "",
+    gender: p.gender ?? "",
     name: p.name ?? "",
     status: p.status ?? null,
     university: p.university ?? "",
@@ -27,7 +27,7 @@ function fromRow(row: Record<string, unknown>): CurrentSelfProfile {
   return {
     id: row.id as string,
     userId: row.user_id as string,
-    profileName: (row.profile_name as string) ?? undefined,
+    gender: (row.gender as CurrentSelfProfile["gender"]) ?? undefined,
     name: (row.name as string) ?? undefined,
     status: (row.status as CurrentSelfProfile["status"]) ?? undefined,
     university: (row.university as string) ?? undefined,
@@ -53,7 +53,7 @@ export async function ensureProfileForUser(
   const defaults: CurrentSelfProfile = {
     id: "",
     userId,
-    profileName: "",
+    gender: undefined,
     name: "",
     age: 30,
     lifeStage: "exploring",

@@ -15,10 +15,12 @@ export type LifeStage =
 
 export type StudyOrWorkStatus = "studying" | "working";
 
+export type Gender = "male" | "female" | "other";
+
 export interface CurrentSelfProfile {
   id?: string;
   userId: string;
-  profileName?: string;
+  gender?: Gender;
   name?: string;
   status?: StudyOrWorkStatus;
   university?: string;
