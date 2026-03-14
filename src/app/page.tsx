@@ -10,14 +10,14 @@ export default function LandingPage() {
           Talk to different future versions of yourself.
         </h1>
         <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed animate-fade-in-up [animation-delay:0.1s] opacity-0 [animation-fill-mode:forwards]">
-          Not fortune-telling. A reflective space to explore who you might become—through three possible paths, one question, and three answers.
+          Not fortune-telling. A reflective space to explore who you might become—through three possible futures, one question, and three answers.
         </p>
         <div className="mt-14 animate-fade-in-up [animation-delay:0.2s] opacity-0 [animation-fill-mode:forwards]">
           <Link
             href="/login"
             className="inline-flex items-center justify-center rounded-2xl bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25"
           >
-            Begin your branches
+            Begin your journey
           </Link>
         </div>
       </section>

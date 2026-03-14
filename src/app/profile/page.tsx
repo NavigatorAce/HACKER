@@ -72,7 +72,7 @@ export default function ProfilePage() {
             Your current self
           </h1>
           <p className="mt-3 text-muted-foreground">
-            A few questions to ground your future branches in who you are today.
+            A few questions to ground your future selves in who you are today.
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export default function ProfilePage() {
 
           <div className="flex justify-end">
             <Button type="submit" size="lg" disabled={loading}>
-              {loading ? "Saving…" : "Save and generate my branches"}
+              {loading ? "Saving…" : "Save and continue"}
             </Button>
           </div>
         </form>

@@ -62,8 +62,8 @@ export default function LoginPage() {
           </CardTitle>
           <CardDescription>
             {isSignUp
-              ? "Sign up to save your profile and revisit your branches."
-              : "Sign in to continue to your branches."}
+              ? "Sign up to save your profile and revisit your insights."
+              : "Sign in to continue your journey."}
           </CardDescription>
         </CardHeader>
         <CardContent>

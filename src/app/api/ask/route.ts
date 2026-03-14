@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       }
       const branches = await getBranchesByProfileId(supabase, profile.id);
       if (branches.length === 0) {
-        return NextResponse.json({ error: "Generate branches from your profile first" }, { status: 400 });
+        return NextResponse.json({ error: "Complete your profile to generate future selves first" }, { status: 400 });
       }
       const session = await createSession(supabase, user.id, profile.id, question);
       const answers = await Promise.all(
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     }
     const branches = mockStore.getBranches();
     if (branches.length === 0) {
-      return NextResponse.json({ error: "Generate branches from your profile first" }, { status: 400 });
+      return NextResponse.json({ error: "Complete your profile to generate future selves first" }, { status: 400 });
     }
     const session = mockStore.createSession(userId, profile.id, question);
     const answers = await Promise.all(

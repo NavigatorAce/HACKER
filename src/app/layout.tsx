@@ -15,9 +15,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Branch Self — Explore who you might become",
+  title: "Future Me — Explore who you might become",
   description:
-    "Talk to different future versions of yourself across parallel life branches. A reflective experience for self-exploration and decision support.",
+    "Talk to different future versions of yourself across parallel life paths. A reflective experience for self-exploration and decision support.",
 };
 
 export default function RootLayout({

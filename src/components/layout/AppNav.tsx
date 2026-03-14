@@ -8,7 +8,6 @@ import { useAuth, getDisplayNameFromAuth } from "@/hooks/useAuth";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/profile", label: "Profile" },
-  { href: "/branches", label: "Branches" },
   { href: "/ask", label: "Ask" },
   { href: "/history", label: "History" },
 ];
@@ -25,7 +24,7 @@ export function AppNav() {
           href="/"
           className="text-lg font-semibold tracking-tight text-foreground transition-opacity hover:opacity-90"
         >
-          Branch Self
+          Future Me
         </Link>
         <nav className="flex items-center gap-8">
           {navItems

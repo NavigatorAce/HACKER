@@ -48,7 +48,7 @@ export default function BranchesPage() {
   if (loading) {
     return (
       <div className="section-padding flex min-h-[60vh] items-center justify-center">
-        <p className="text-muted-foreground">Loading your branches…</p>
+        <p className="text-muted-foreground">Loading your futures…</p>
       </div>
     );
   }
@@ -56,7 +56,7 @@ export default function BranchesPage() {
   if (branches.length === 0) {
     return (
       <div className="section-padding text-center">
-        <h1 className="font-display text-3xl text-foreground">No branches yet</h1>
+        <h1 className="font-display text-3xl text-foreground">No futures yet</h1>
         <p className="mt-4 text-muted-foreground">
           Complete your current self profile to generate your three future paths.
         </p>
@@ -72,7 +72,7 @@ export default function BranchesPage() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-14 text-center">
           <h1 className="font-display text-3xl md:text-4xl text-foreground">
-            Your future branches
+            Your future selves
           </h1>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
             Three possible versions of you. Each has walked a different path—and each can answer your question.
