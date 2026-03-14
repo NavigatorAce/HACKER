@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +33,35 @@ export default function ProfilePage() {
   const [struggles, setStruggles] = useState("");
   const [additional, setAdditional] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/profile");
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        const p = data.profile;
+        if (!p || cancelled) {
+          setInitialLoad(false);
+          return;
+        }
+        setAge(p.age != null ? String(p.age) : "");
+        setLifeStage((p.lifeStage as LifeStage) || "exploring");
+        setTraits(Array.isArray(p.personalityTraits) ? p.personalityTraits : []);
+        setGoals(p.goals ?? "");
+        setFears(p.fears ?? "");
+        setStruggles(p.currentStruggles ?? "");
+        setAdditional(p.additionalContext ?? "");
+      } catch {
+        // ignore
+      } finally {
+        if (!cancelled) setInitialLoad(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   function toggleTrait(t: string) {
     setTraits((prev) =>
@@ -62,6 +91,14 @@ export default function ProfilePage() {
     } catch {
       setLoading(false);
     }
+  }
+
+  if (initialLoad) {
+    return (
+      <div className="section-padding flex min-h-[60vh] items-center justify-center">
+        <p className="text-muted-foreground">Loading your profile…</p>
+      </div>
+    );
   }
 
   return (
