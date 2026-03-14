@@ -54,7 +54,7 @@ export default function HistoryPage() {
             Your past reflections
           </h1>
           <p className="mt-3 text-muted-foreground">
-            Questions you’ve asked and the answers from your three future selves.
+            Your past conversations with Future Me.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ export default function HistoryPage() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm text-muted-foreground">
-                        View three answers →
+                        View conversation →
                       </p>
                     </CardContent>
                   </Card>

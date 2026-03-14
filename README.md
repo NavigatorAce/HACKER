@@ -6,7 +6,7 @@
 
 ## One-Sentence Pitch
 
-Future Me is an AI-powered reflective experience that lets you build a profile of who you are today, then have a real-time conversation with a future version of yourself — grounded in your personality, goals, fears, and struggles — for emotionally honest, personalized guidance.
+Future Me lets you create a profile of who you are right now, then chat with a future version of yourself. Your personality, goals, fears, and struggles all shape the conversation, so every response feels personal and emotionally honest.
 
 ---
 
