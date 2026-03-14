@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { upsertProfile } from "@/services/profile";
+import { getProfileByUserId, upsertProfile } from "@/services/profile";
 import { generateBranches } from "@/services/ai";
 import { insertBranches, deleteBranchesByProfileId } from "@/services/branches";
 import { mockStore } from "@/lib/mock-store";
@@ -9,6 +9,25 @@ import type { CurrentSelfProfile } from "@/types";
 const USE_SUPABASE = !!(
   process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
+
+export async function GET() {
+  try {
+    if (USE_SUPABASE) {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+      const profile = await getProfileByUserId(supabase, user.id);
+      return NextResponse.json({ profile });
+    }
+    const profile = mockStore.getProfile();
+    return NextResponse.json({ profile });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "Failed to load profile" }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {

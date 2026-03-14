@@ -33,6 +33,26 @@ function fromRow(row: Record<string, unknown>): CurrentSelfProfile {
   };
 }
 
+/** Create or ensure a default profile row for a user (e.g. right after sign up). */
+export async function ensureProfileForUser(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<CurrentSelfProfile> {
+  const defaults: CurrentSelfProfile = {
+    id: "",
+    userId,
+    age: 30,
+    lifeStage: "exploring",
+    personalityTraits: [],
+    goals: "",
+    fears: "",
+    currentStruggles: "",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  return upsertProfile(supabase, defaults);
+}
+
 export async function getProfileByUserId(
   supabase: SupabaseClient,
   userId: string

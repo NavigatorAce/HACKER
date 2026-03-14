@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { ensureProfileForUser } from "@/services/profile";
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +12,13 @@ export async function POST(request: Request) {
     if (signUp) {
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+      if (data.user) {
+        try {
+          await ensureProfileForUser(supabase, data.user.id);
+        } catch (e) {
+          console.error("Create profile after signup:", e);
+        }
+      }
       return NextResponse.json({ user: data.user });
     }
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
