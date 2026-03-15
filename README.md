@@ -106,7 +106,7 @@ The product does **not** predict the future. It supports **self-reflection**, **
 
 ```bash
 # Clone the repository
-git clone https://github.com/NavigatorAce/FUTURE-ME.git
+git clone https://github.com/YKK0224/FUTURE-ME
 cd FUTURE-ME
 
 # Install dependencies
