@@ -141,7 +141,7 @@ See **[STRUCTURE.md](./STRUCTURE.md)** for folder layout and architecture detail
 
 ## License
 
-MIT (or specify your license when chosen).
+This project is licensed under the MIT License.
 
 ---
 
